@@ -1,16 +1,31 @@
 import React, { useState } from "react"
-import Values from "values.js"
+import { tint, shade } from "tint-shade-color"
+
 function App() {
-  const [color, setColor] = useState("#FCFCFC")
+  let [color, setColor] = useState("#FCFCFC")
   const [list, setList] = useState([])
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const colors = new Values(color).all(20)
-    setList(colors)
+    let tints = color
+    let shades = color
 
-    // console.log(list)
-    // let color=new Values(color.all(10))
+    for (let i = 0; i < 5; i++) {
+      setList([])
+      tints = tint(tints, 0.4)
+      console.log(tints)
+      list.push(tints)
+      // setList(list =>[...list,tints])
+    }
+
+    list.push(color)
+
+    for (let i = 0; i < 5; i++) {
+      shades = shade(shades, 0.4)
+      console.log(shades)
+      list.push(shades)
+    }
+    console.log(list)
   }
   return (
     <>
@@ -34,16 +49,13 @@ function App() {
         </form>
       </section>
       <section className="colors">
-        {list.map((color, index) => {
-          if (index !== 0 && index !== 10) {
-            return (
-              <div style={{ backgroundColor: `#${color.hex}` }}>
-                <article>
-                  #{color.hex} ,{color.weight}
-                </article>
-              </div>
-            )
-          }
+        {/* {JSON.stringify(list)} */}
+        {list.map((hnum) => {
+          return (
+            <div style={{ backgroundColor: `${hnum}` }}>
+              <article>{hnum}</article>
+            </div>
+          )
         })}
       </section>
     </>
